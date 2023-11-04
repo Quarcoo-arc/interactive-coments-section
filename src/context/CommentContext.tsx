@@ -1,24 +1,33 @@
-import { createContext, useState } from "react";
+import React, { createContext, useState } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
+import { ReactNode } from "react";
 import data from "../data/data.json";
+import { CommentContextType, CommentType } from "./types";
 
-const CommentContext = createContext();
+const CommentContext = createContext<CommentContextType | null>(null);
 
-export const CommentContextProvider = ({ children }) => {
+export const CommentContextProvider = ({
+  children,
+}: {
+  children: ReactNode;
+}) => {
   const [state, setState] = useLocalStorage("state", data);
 
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
 
-  const [commentToDelete, setCommentToDelete] = useState({
+  const [commentToDelete, setCommentToDelete] = useState<{
+    commentId: number | null;
+    replyId: number | null;
+  }>({
     commentId: null,
     replyId: null,
   });
 
-  const [createReply, setCreateReply] = useState(false);
+  const [createReply, setCreateReply] = useState<boolean>(false);
 
   const { comments, currentUser } = state;
 
-  const addNewComment = (comment) => {
+  const addNewComment = (comment: string) => {
     const newComment = {
       id: comments.at(comments.length - 1).id + 1,
       content: comment,
@@ -28,13 +37,14 @@ export const CommentContextProvider = ({ children }) => {
       user: currentUser,
     };
     comments.push(newComment);
-    setState((prevState) => ({ ...prevState, comments }));
+    setState((prevState: CommentType) => ({ ...prevState, comments }));
   };
 
-  const addNewReply = (message, commentId, replyId) => {
-    const comment = comments.find((item) => item.id === commentId);
+  const addNewReply = (message: string, commentId: number, replyId: number) => {
+    const comment = comments.find((item: CommentType) => item.id === commentId);
     const replyToUsername = replyId
-      ? comment.replies.find((item) => item.id === replyId).user.username
+      ? comment.replies.find((item: CommentType) => item.id === replyId).user
+          .username
       : comment.user.username;
     const newReply = {
       id: comment.replies.length
@@ -47,32 +57,40 @@ export const CommentContextProvider = ({ children }) => {
       user: currentUser,
     };
     comment.replies.push(newReply);
-    setState((prevState) => ({ ...prevState, comments }));
+    setState((prevState: CommentContextType) => ({ ...prevState, comments }));
   };
 
-  const updateComment = (message, commentId, replyId) => {
-    const comment = comments.find((item) => item.id === commentId);
+  const updateComment = (
+    message: string,
+    commentId: number,
+    replyId: number
+  ) => {
+    const comment = comments.find((item: CommentType) => item.id === commentId);
     if (replyId) {
-      const reply = comment.replies.find((item) => item.id === replyId);
+      const reply = comment.replies.find(
+        (item: CommentType) => item.id === replyId
+      );
       reply.content = message;
     } else if (!replyId) {
       comment.content = message;
     }
-    setState((prevState) => ({ ...prevState, comments }));
+    setState((prevState: CommentContextType) => ({ ...prevState, comments }));
   };
 
-  const changeScore = (whereTo, commentId, replyId) => {
-    const comment = comments.find((item) => item.id === commentId);
+  const changeScore = (whereTo: string, commentId: number, replyId: number) => {
+    const comment = comments.find((item: CommentType) => item.id === commentId);
     if (replyId) {
-      const reply = comment.replies.find((item) => item.id === replyId);
+      const reply = comment.replies.find(
+        (item: CommentType) => item.id === replyId
+      );
       whereTo === "INC" ? reply.score++ : reply.score--;
     } else {
       whereTo === "INC" ? comment.score++ : comment.score--;
     }
-    setState((prevState) => ({ ...prevState, comments }));
+    setState((prevState: CommentContextType) => ({ ...prevState, comments }));
   };
 
-  const deleteComment = (commentId, replyId) => {
+  const deleteComment = (commentId: number, replyId: number) => {
     setShowDeleteModal(true);
 
     setCommentToDelete({ commentId, replyId });
@@ -84,18 +102,21 @@ export const CommentContextProvider = ({ children }) => {
       return;
     }
     const comment = comments.find(
-      (item) => item.id === commentToDelete.commentId
+      (item: CommentType) => item.id === commentToDelete.commentId
     );
-    let filtered;
+    let filtered: CommentType[];
     if (commentToDelete.commentId && !commentToDelete.replyId) {
-      filtered = comments.filter((item) => item !== comment);
-      setState((prevState) => ({ ...prevState, comments: filtered }));
+      filtered = comments.filter((item: CommentType) => item !== comment);
+      setState((prevState: CommentContextType) => ({
+        ...prevState,
+        comments: filtered,
+      }));
     } else if (commentToDelete.commentId && commentToDelete.replyId) {
       filtered = comment.replies.filter(
-        (item) => item.id !== commentToDelete.replyId
+        (item: CommentType) => item.id !== commentToDelete.replyId
       );
       comment.replies = filtered;
-      setState((prevState) => ({ ...prevState, comments }));
+      setState((prevState: CommentContextType) => ({ ...prevState, comments }));
     }
 
     cancelDelete();
@@ -107,7 +128,7 @@ export const CommentContextProvider = ({ children }) => {
     setShowDeleteModal(false);
   };
 
-  const timeDifference = (date1, date2) => {
+  const timeDifference = (date1: Date, date2: Date) => {
     var difference = date1.getTime() - date2.getTime();
 
     var daysDifference = Math.floor(difference / 1000 / 60 / 60 / 24);

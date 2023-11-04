@@ -1,3 +1,4 @@
+import React from "react";
 import plusIcon from "../assets/images/icon-plus.svg";
 import minusIcon from "../assets/images/icon-minus.svg";
 import { ReactComponent as ReplyIcon } from "../assets/images/icon-reply.svg";

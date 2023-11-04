@@ -1,9 +1,10 @@
+import React from "react";
 import CommentList from "./components/CommentList";
 import CreateComment from "./components/CreateComment";
 import Footer from "./components/Footer";
 import { CommentContextProvider } from "./context/CommentContext";
 
-function App() {
+const App: React.FC = () => {
   return (
     <CommentContextProvider>
       <div>
@@ -15,6 +16,6 @@ function App() {
       </div>
     </CommentContextProvider>
   );
-}
+};
 
 export default App;
