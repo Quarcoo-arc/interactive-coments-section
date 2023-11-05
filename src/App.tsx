@@ -3,6 +3,7 @@ import CommentList from "./components/CommentList";
 import CreateComment from "./components/CreateComment";
 import Footer from "./components/Footer";
 import { CommentContextProvider } from "./context/CommentContext";
+import "./custom.d";
 
 const App: React.FC = () => {
   return (

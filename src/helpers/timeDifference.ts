@@ -1,4 +1,4 @@
-export const timeDifference = (date1: Date, date2: Date) => {
+export const timeDifference = (date1: Date, date2: Date): string => {
   let difference = date1.getTime() - date2.getTime();
 
   let daysDifference = Math.floor(difference / 1000 / 60 / 60 / 24);

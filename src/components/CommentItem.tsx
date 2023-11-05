@@ -1,9 +1,7 @@
-import React from "react";
-import plusIcon from "../assets/images/icon-plus.svg";
-import minusIcon from "../assets/images/icon-minus.svg";
-import { ReactComponent as ReplyIcon } from "../assets/images/icon-reply.svg";
-import { ReactComponent as DeleteIcon } from "../assets/images/icon-delete.svg";
-import { ReactComponent as EditIcon } from "../assets/images/icon-edit.svg";
+import React, { FormEvent } from "react";
+import ReplyIcon from "../assets/images/icon-reply.svg";
+import DeleteIcon from "../assets/images/icon-delete.svg";
+import EditIcon from "../assets/images/icon-edit.svg";
 import CommentReply from "./CommentReply";
 import { useState, useContext, useEffect, useRef } from "react";
 import CommentContext from "../context/CommentContext";
@@ -11,6 +9,8 @@ import CreateComment from "./CreateComment";
 import DeleteModal from "./DeleteModal";
 import { timeDifference } from "../helpers";
 import { CommentType } from "../types";
+const plusIcon = require("../assets/images/icon-plus.svg") as string;
+const minusIcon = require("../assets/images/icon-minus.svg") as string;
 
 const CommentItem = ({ comment }: { comment: CommentType }) => {
   const {
@@ -31,7 +31,7 @@ const CommentItem = ({ comment }: { comment: CommentType }) => {
 
   const [createReply, setCreateReply] = useState(false);
 
-  const [dateDifference, setDateDifference] = useState(null);
+  const [dateDifference, setDateDifference] = useState<string | null>(null);
 
   const isMounted = useRef(true);
   const isMounted2 = useRef(true);
@@ -56,9 +56,9 @@ const CommentItem = ({ comment }: { comment: CommentType }) => {
     return () => {
       isMounted.current = false;
     };
-  }, [createdAt, timeDifference]);
+  }, [createdAt]);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     updateComment(editText, id);
     setEditComment(false);
@@ -93,13 +93,7 @@ const CommentItem = ({ comment }: { comment: CommentType }) => {
             <p className="username">{user.username}</p>
             {isCurrentUser && <p className="currentUser">you</p>}
             <p className="time">
-              {dateDifference
-                ? dateDifference
-                : new Date(createdAt).getTime() > 0
-                ? setDateDifference(
-                    timeDifference(new Date(), new Date(createdAt))
-                  )
-                : createdAt}
+              {dateDifference ? dateDifference : createdAt}
             </p>
           </div>
           {editComment ? (
@@ -146,12 +140,12 @@ const CommentItem = ({ comment }: { comment: CommentType }) => {
         )}
       </div>
       {createReply && (
-        <CreateComment key={id} buttonText={"REPLY"} commentId={id} />
+        <CreateComment key={id} buttonText="REPLY" commentId={id} />
       )}
       <div className="container">
         {replies && (
           <div className="line">
-            {replies.map((reply, id) => (
+            {replies.map((reply: CommentType, id: number) => (
               <CommentReply key={id} reply={reply} commentId={comment.id} />
             ))}
           </div>

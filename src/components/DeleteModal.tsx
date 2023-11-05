@@ -1,7 +1,7 @@
 import CommentContext from "../context/CommentContext";
-import { useContext } from "react";
+import React, { useContext } from "react";
 
-const DeleteModal = () => {
+const DeleteModal: React.FC = () => {
   const { confirmDelete, cancelDelete } = useContext(CommentContext);
 
   return (

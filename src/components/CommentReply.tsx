@@ -1,14 +1,14 @@
-import plusIcon from "../assets/images/icon-plus.svg";
-import minusIcon from "../assets/images/icon-minus.svg";
-import { ReactComponent as ReplyIcon } from "../assets/images/icon-reply.svg";
-import { ReactComponent as DeleteIcon } from "../assets/images/icon-delete.svg";
-import { ReactComponent as EditIcon } from "../assets/images/icon-edit.svg";
+import ReplyIcon from "../assets/images/icon-reply.svg";
+import DeleteIcon from "../assets/images/icon-delete.svg";
+import EditIcon from "../assets/images/icon-edit.svg";
 import CommentContext from "../context/CommentContext";
 import CreateComment from "./CreateComment";
-import { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { timeDifference } from "../helpers";
+const plusIcon = require("../assets/images/icon-plus.svg") as string;
+const minusIcon = require("../assets/images/icon-minus.svg") as string;
 
-const CommentReply = ({ reply, commentId }) => {
+const CommentReply: React.FC = ({ reply, commentId }) => {
   const { currentUser, changeScore, deleteComment, updateComment } =
     useContext(CommentContext);
 
@@ -22,7 +22,7 @@ const CommentReply = ({ reply, commentId }) => {
 
   const [createReply, setCreateReply] = useState(false);
 
-  const [dateDifference, setDateDifference] = useState(null);
+  const [dateDifference, setDateDifference] = useState<string | null>(null);
 
   const isMounted = useRef(true);
   const isMounted2 = useRef(true);
@@ -45,9 +45,9 @@ const CommentReply = ({ reply, commentId }) => {
       }, 4000);
     }
     return () => (isMounted.current = false);
-  }, [createdAt, timeDifference, isMounted]);
+  }, [createdAt, isMounted]);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     updateComment(editText, commentId, id);
     setEditComment(false);
@@ -86,13 +86,7 @@ const CommentReply = ({ reply, commentId }) => {
             <p className="username">{user.username}</p>
             {isCurrentUser && <p className="currentUser">you</p>}
             <p className="time">
-              {dateDifference
-                ? dateDifference
-                : new Date(createdAt).getTime() > 0
-                ? setDateDifference(
-                    timeDifference(new Date(), new Date(createdAt))
-                  )
-                : createdAt}
+              {dateDifference ? dateDifference : createdAt}
             </p>
           </div>
           {editComment ? (

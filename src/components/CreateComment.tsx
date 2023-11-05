@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import CommentContext from "../context/CommentContext";
 import { CreateCommentProps } from "../types";
 
-const CreateComment = ({
+const CreateComment: React.FC = ({
   buttonText,
   commentId,
   replyId,
