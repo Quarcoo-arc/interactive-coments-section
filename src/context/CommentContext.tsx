@@ -2,7 +2,7 @@ import React, { createContext, useState } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { ReactNode } from "react";
 import data from "../data/data.json";
-import { CommentContextType, CommentType } from "./types";
+import { CommentContextType, CommentType } from "../types";
 
 const CommentContext = createContext<CommentContextType | null>(null);
 
@@ -128,40 +128,12 @@ export const CommentContextProvider = ({
     setShowDeleteModal(false);
   };
 
-  const timeDifference = (date1: Date, date2: Date) => {
-    var difference = date1.getTime() - date2.getTime();
-
-    var daysDifference = Math.floor(difference / 1000 / 60 / 60 / 24);
-    difference -= daysDifference * 1000 * 60 * 60 * 24;
-
-    var hoursDifference = Math.floor(difference / 1000 / 60 / 60);
-    difference -= hoursDifference * 1000 * 60 * 60;
-
-    var minutesDifference = Math.floor(difference / 1000 / 60);
-    difference -= minutesDifference * 1000 * 60;
-
-    var secondsDifference = Math.floor(difference / 1000);
-
-    if (daysDifference >= 1) {
-      return daysDifference + "days ago";
-    } else if (hoursDifference >= 1) {
-      return hoursDifference + "hours ago";
-    } else if (minutesDifference >= 1) {
-      return minutesDifference + "minutes ago";
-    } else if (secondsDifference >= 1) {
-      return secondsDifference + "seconds ago";
-    } else {
-      return "now";
-    }
-  };
-
   return (
     <CommentContext.Provider
       value={{
         ...state,
         createReply,
         showDeleteModal,
-        timeDifference,
         deleteComment,
         updateComment,
         confirmDelete,

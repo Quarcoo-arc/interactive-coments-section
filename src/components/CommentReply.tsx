@@ -6,15 +6,11 @@ import { ReactComponent as EditIcon } from "../assets/images/icon-edit.svg";
 import CommentContext from "../context/CommentContext";
 import CreateComment from "./CreateComment";
 import { useContext, useEffect, useRef, useState } from "react";
+import { timeDifference } from "../helpers";
 
 const CommentReply = ({ reply, commentId }) => {
-  const {
-    currentUser,
-    changeScore,
-    deleteComment,
-    updateComment,
-    timeDifference,
-  } = useContext(CommentContext);
+  const { currentUser, changeScore, deleteComment, updateComment } =
+    useContext(CommentContext);
 
   const { id, replyingTo, score, createdAt, user, content } = reply;
 

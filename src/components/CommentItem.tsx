@@ -9,6 +9,7 @@ import { useState, useContext, useEffect, useRef } from "react";
 import CommentContext from "../context/CommentContext";
 import CreateComment from "./CreateComment";
 import DeleteModal from "./DeleteModal";
+import { timeDifference } from "../helpers";
 
 const CommentItem = ({ comment }) => {
   const {
@@ -17,7 +18,6 @@ const CommentItem = ({ comment }) => {
     deleteComment,
     showDeleteModal,
     updateComment,
-    timeDifference,
   } = useContext(CommentContext);
 
   const { id, score, createdAt, user, content, replies } = comment;
