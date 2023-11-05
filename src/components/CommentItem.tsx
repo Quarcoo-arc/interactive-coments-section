@@ -1,7 +1,9 @@
 import React, { FormEvent } from "react";
-import ReplyIcon from "../assets/images/icon-reply.svg";
-import DeleteIcon from "../assets/images/icon-delete.svg";
-import EditIcon from "../assets/images/icon-edit.svg";
+import { ReactComponent as ReplyIcon } from "../assets/images/icon-reply.svg";
+import { ReactComponent as DeleteIcon } from "../assets/images/icon-delete.svg";
+import { ReactComponent as EditIcon } from "../assets/images/icon-edit.svg";
+import plusIcon from "../assets/images/icon-plus.svg";
+import minusIcon from "../assets/images/icon-minus.svg";
 import CommentReply from "./CommentReply";
 import { useState, useContext, useEffect, useRef } from "react";
 import CommentContext from "../context/CommentContext";
@@ -9,8 +11,6 @@ import CreateComment from "./CreateComment";
 import DeleteModal from "./DeleteModal";
 import { timeDifference } from "../helpers";
 import { CommentType } from "../types";
-const plusIcon = require("../assets/images/icon-plus.svg") as string;
-const minusIcon = require("../assets/images/icon-minus.svg") as string;
 
 const CommentItem = ({ comment }: { comment: CommentType }) => {
   const {

@@ -13,6 +13,7 @@ type CommentType = {
   score: number;
   user: UserType;
   replies: CommentType[];
+  replyingTo?: string;
 };
 
 interface UserInfoType {
@@ -26,4 +27,14 @@ type CreateCommentProps = {
   replyId?: number;
 };
 
-export { UserInfoType, CommentType, CreateCommentProps };
+type CommentReplyProps = {
+  reply: CommentType;
+  commentId: number;
+};
+
+export {
+  type UserInfoType,
+  type CommentType,
+  type CreateCommentProps,
+  type CommentReplyProps,
+};

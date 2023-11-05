@@ -1,14 +1,15 @@
-import ReplyIcon from "../assets/images/icon-reply.svg";
-import DeleteIcon from "../assets/images/icon-delete.svg";
-import EditIcon from "../assets/images/icon-edit.svg";
+import { ReactComponent as ReplyIcon } from "../assets/images/icon-reply.svg";
+import { ReactComponent as DeleteIcon } from "../assets/images/icon-delete.svg";
+import { ReactComponent as EditIcon } from "../assets/images/icon-edit.svg";
+import plusIcon from "../assets/images/icon-plus.svg";
+import minusIcon from "../assets/images/icon-minus.svg";
 import CommentContext from "../context/CommentContext";
 import CreateComment from "./CreateComment";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { timeDifference } from "../helpers";
-const plusIcon = require("../assets/images/icon-plus.svg") as string;
-const minusIcon = require("../assets/images/icon-minus.svg") as string;
+import { CommentReplyProps } from "../types";
 
-const CommentReply: React.FC = ({ reply, commentId }) => {
+const CommentReply = ({ reply, commentId }: CommentReplyProps) => {
   const { currentUser, changeScore, deleteComment, updateComment } =
     useContext(CommentContext);
 
@@ -44,7 +45,9 @@ const CommentReply: React.FC = ({ reply, commentId }) => {
         }
       }, 4000);
     }
-    return () => (isMounted.current = false);
+    return () => {
+      isMounted.current = false;
+    };
   }, [createdAt, isMounted]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
