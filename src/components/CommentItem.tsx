@@ -10,8 +10,9 @@ import CommentContext from "../context/CommentContext";
 import CreateComment from "./CreateComment";
 import DeleteModal from "./DeleteModal";
 import { timeDifference } from "../helpers";
+import { CommentType } from "../types";
 
-const CommentItem = ({ comment }) => {
+const CommentItem = ({ comment }: { comment: CommentType }) => {
   const {
     currentUser,
     changeScore,

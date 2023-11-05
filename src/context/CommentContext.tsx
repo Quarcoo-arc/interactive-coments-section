@@ -2,9 +2,9 @@ import React, { createContext, useState } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { ReactNode } from "react";
 import data from "../data/data.json";
-import { CommentContextType, CommentType } from "../types";
+import { UserInfoType, CommentType } from "../types";
 
-const CommentContext = createContext<CommentContextType | null>(null);
+const CommentContext = createContext<any>(null);
 
 export const CommentContextProvider = ({
   children,
@@ -57,7 +57,7 @@ export const CommentContextProvider = ({
       user: currentUser,
     };
     comment.replies.push(newReply);
-    setState((prevState: CommentContextType) => ({ ...prevState, comments }));
+    setState((prevState: UserInfoType) => ({ ...prevState, comments }));
   };
 
   const updateComment = (
@@ -74,7 +74,7 @@ export const CommentContextProvider = ({
     } else if (!replyId) {
       comment.content = message;
     }
-    setState((prevState: CommentContextType) => ({ ...prevState, comments }));
+    setState((prevState: UserInfoType) => ({ ...prevState, comments }));
   };
 
   const changeScore = (whereTo: string, commentId: number, replyId: number) => {
@@ -87,7 +87,7 @@ export const CommentContextProvider = ({
     } else {
       whereTo === "INC" ? comment.score++ : comment.score--;
     }
-    setState((prevState: CommentContextType) => ({ ...prevState, comments }));
+    setState((prevState: UserInfoType) => ({ ...prevState, comments }));
   };
 
   const deleteComment = (commentId: number, replyId: number) => {
@@ -107,7 +107,7 @@ export const CommentContextProvider = ({
     let filtered: CommentType[];
     if (commentToDelete.commentId && !commentToDelete.replyId) {
       filtered = comments.filter((item: CommentType) => item !== comment);
-      setState((prevState: CommentContextType) => ({
+      setState((prevState: UserInfoType) => ({
         ...prevState,
         comments: filtered,
       }));
@@ -116,7 +116,7 @@ export const CommentContextProvider = ({
         (item: CommentType) => item.id !== commentToDelete.replyId
       );
       comment.replies = filtered;
-      setState((prevState: CommentContextType) => ({ ...prevState, comments }));
+      setState((prevState: UserInfoType) => ({ ...prevState, comments }));
     }
 
     cancelDelete();

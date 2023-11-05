@@ -1,12 +1,18 @@
+import React from "react";
 import { useContext, useState } from "react";
 import CommentContext from "../context/CommentContext";
+import { CreateCommentProps } from "../types";
 
-const CreateComment = ({ buttonText, commentId, replyId }) => {
+const CreateComment = ({
+  buttonText,
+  commentId,
+  replyId,
+}: CreateCommentProps) => {
   const { currentUser, addNewComment, addNewReply } =
     useContext(CommentContext);
   const [text, setText] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     if (buttonText && buttonText === "REPLY" && !replyId) {
       addNewReply(text, commentId);

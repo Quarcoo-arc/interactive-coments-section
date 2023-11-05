@@ -15,9 +15,15 @@ type CommentType = {
   replies: CommentType[];
 };
 
-interface CommentContextType {
+interface UserInfoType {
   currentUser: UserType;
   comments: CommentType[];
 }
 
-export { CommentContextType, CommentType };
+type CreateCommentProps = {
+  buttonText?: "REPLY";
+  commentId?: number;
+  replyId?: number;
+};
+
+export { UserInfoType, CommentType, CreateCommentProps };
