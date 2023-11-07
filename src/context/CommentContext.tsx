@@ -130,13 +130,12 @@ export const CommentContextProvider = ({
       }));
     } else if (commentToDelete.commentId && commentToDelete.replyId) {
       const comment = comments.find(
-        (item: CommentType) => item.id === commentToDelete.replyId
+        (item: CommentType) => item.id === commentToDelete.commentId
       );
       const filtered = comment?.replies.filter(
         (item: ReplyType) => item.id !== commentToDelete.replyId
       );
-      if (comment?.replies)
-        comment.replies = filtered ? filtered : comment.replies;
+      if (comment?.replies) comment.replies = filtered ?? comment.replies;
       setState((prevState: UserInfoType) => ({ ...prevState, comments }));
     }
 
