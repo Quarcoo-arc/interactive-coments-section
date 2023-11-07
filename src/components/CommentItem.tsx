@@ -1,4 +1,4 @@
-import React, { FormEvent } from "react";
+import React from "react";
 import { ReactComponent as ReplyIcon } from "../assets/images/icon-reply.svg";
 import { ReactComponent as DeleteIcon } from "../assets/images/icon-delete.svg";
 import { ReactComponent as EditIcon } from "../assets/images/icon-edit.svg";
@@ -10,7 +10,14 @@ import CommentContext from "../context/CommentContext";
 import CreateComment from "./CreateComment";
 import DeleteModal from "./DeleteModal";
 import { timeDifference } from "../helpers";
-import { CommentType } from "../types";
+import {
+  CommentType,
+  ReplyType,
+  UserType,
+  UpdateCommentOrReplyArgsType,
+  DeleteCommentOrReplyFuncType,
+  ChangeScoreFuncType,
+} from "../types";
 
 const CommentItem = ({ comment }: { comment: CommentType }) => {
   const {
@@ -19,6 +26,12 @@ const CommentItem = ({ comment }: { comment: CommentType }) => {
     deleteComment,
     showDeleteModal,
     updateComment,
+  }: {
+    currentUser: UserType;
+    changeScore: ChangeScoreFuncType;
+    deleteComment: DeleteCommentOrReplyFuncType;
+    showDeleteModal: boolean;
+    updateComment: UpdateCommentOrReplyArgsType;
   } = useContext(CommentContext);
 
   const { id, score, createdAt, user, content, replies } = comment;
@@ -47,6 +60,7 @@ const CommentItem = ({ comment }: { comment: CommentType }) => {
 
   useEffect(() => {
     if (isMounted) {
+      setDateDifference(timeDifference(new Date(), new Date(createdAt)));
       setInterval(() => {
         if (new Date(createdAt).getTime() > 0) {
           setDateDifference(timeDifference(new Date(), new Date(createdAt)));
@@ -58,7 +72,7 @@ const CommentItem = ({ comment }: { comment: CommentType }) => {
     };
   }, [createdAt]);
 
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     updateComment(editText, id);
     setEditComment(false);
@@ -145,7 +159,7 @@ const CommentItem = ({ comment }: { comment: CommentType }) => {
       <div className="container">
         {replies && (
           <div className="line">
-            {replies.map((reply: CommentType, id: number) => (
+            {replies.map((reply: ReplyType, id: number) => (
               <CommentReply key={id} reply={reply} commentId={comment.id} />
             ))}
           </div>

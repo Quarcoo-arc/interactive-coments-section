@@ -12,8 +12,16 @@ type CommentType = {
   createdAt: string;
   score: number;
   user: UserType;
-  replies: CommentType[];
-  replyingTo?: string;
+  replies: ReplyType[];
+};
+
+type ReplyType = {
+  id: number;
+  content: string;
+  createdAt: string;
+  score: number;
+  user: UserType;
+  replyingTo: string;
 };
 
 interface UserInfoType {
@@ -28,13 +36,35 @@ type CreateCommentProps = {
 };
 
 type CommentReplyProps = {
-  reply: CommentType;
+  reply: ReplyType;
   commentId: number;
 };
+
+type ChangeScoreFuncType = (
+  whereTo: "INC" | "DEC",
+  commentId: number,
+  replyId?: number
+) => void;
+
+type DeleteCommentOrReplyFuncType = (
+  commentId: number,
+  replyId?: number
+) => void;
+
+type UpdateCommentOrReplyArgsType = (
+  message: string,
+  commentId: number,
+  replyId?: number
+) => void;
 
 export {
   type UserInfoType,
   type CommentType,
   type CreateCommentProps,
   type CommentReplyProps,
+  type ReplyType,
+  type UserType,
+  type ChangeScoreFuncType,
+  type DeleteCommentOrReplyFuncType,
+  type UpdateCommentOrReplyArgsType,
 };

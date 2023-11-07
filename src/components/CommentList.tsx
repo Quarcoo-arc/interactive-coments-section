@@ -5,7 +5,7 @@ import React from "react";
 import { CommentType } from "../types";
 
 const CommentList = () => {
-  const { comments } = useContext(CommentContext);
+  const { comments }: { comments: CommentType[] } = useContext(CommentContext);
   return comments.map((comment: CommentType, id: number) => (
     <CommentItem key={id} comment={comment} />
   ));

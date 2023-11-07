@@ -7,11 +7,26 @@ import CommentContext from "../context/CommentContext";
 import CreateComment from "./CreateComment";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { timeDifference } from "../helpers";
-import { CommentReplyProps } from "../types";
+import {
+  ChangeScoreFuncType,
+  CommentReplyProps,
+  DeleteCommentOrReplyFuncType,
+  UpdateCommentOrReplyArgsType,
+  UserType,
+} from "../types";
 
 const CommentReply = ({ reply, commentId }: CommentReplyProps) => {
-  const { currentUser, changeScore, deleteComment, updateComment } =
-    useContext(CommentContext);
+  const {
+    currentUser,
+    changeScore,
+    deleteComment,
+    updateComment,
+  }: {
+    currentUser: UserType;
+    changeScore: ChangeScoreFuncType;
+    deleteComment: DeleteCommentOrReplyFuncType;
+    updateComment: UpdateCommentOrReplyArgsType;
+  } = useContext(CommentContext);
 
   const { id, replyingTo, score, createdAt, user, content } = reply;
 
@@ -39,6 +54,7 @@ const CommentReply = ({ reply, commentId }: CommentReplyProps) => {
 
   useEffect(() => {
     if (isMounted) {
+      setDateDifference(timeDifference(new Date(), new Date(createdAt)));
       setInterval(() => {
         if (new Date(createdAt).getTime() > 0) {
           setDateDifference(timeDifference(new Date(), new Date(createdAt)));
