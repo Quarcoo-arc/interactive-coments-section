@@ -8,7 +8,6 @@ import CommentReply from "./CommentReply";
 import { useState, useContext, useEffect, useRef } from "react";
 import CommentContext from "../context/CommentContext";
 import CreateComment from "./CreateComment";
-import DeleteModal from "./DeleteModal";
 import { timeDifference } from "../helpers";
 import {
   CommentType,
@@ -24,13 +23,11 @@ const CommentItem = ({ comment }: { comment: CommentType }) => {
     currentUser,
     changeScore,
     deleteComment,
-    showDeleteModal,
     updateComment,
   }: {
     currentUser: UserType;
     changeScore: ChangeScoreFuncType;
     deleteComment: DeleteCommentOrReplyFuncType;
-    showDeleteModal: boolean;
     updateComment: UpdateCommentOrReplyArgsType;
   } = useContext(CommentContext);
 
@@ -80,7 +77,6 @@ const CommentItem = ({ comment }: { comment: CommentType }) => {
 
   return (
     <>
-      {showDeleteModal && <DeleteModal />}
       <div className={editComment ? "comment editComment" : "comment"}>
         <div className="vote">
           <img

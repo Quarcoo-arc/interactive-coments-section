@@ -57,6 +57,12 @@ type UpdateCommentOrReplyArgsType = (
   replyId?: number
 ) => void;
 
+type ModalProps = {
+  isOpen: boolean;
+  onClose: () => void;
+  children?: React.ReactNode;
+};
+
 export {
   type UserInfoType,
   type CommentType,
@@ -67,4 +73,5 @@ export {
   type ChangeScoreFuncType,
   type DeleteCommentOrReplyFuncType,
   type UpdateCommentOrReplyArgsType,
+  type ModalProps,
 };

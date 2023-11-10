@@ -256,7 +256,7 @@ main {
 }
 
 /* Delete Comment Component */
-.backdrop {
+/* .backdrop {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -265,23 +265,22 @@ main {
   background-color: var(--neutral-grayish-blue);
   opacity: 0.4;
   z-index: 1;
+} */
+
+.modal::backdrop {
+  background: hsl(211 10% 45% / 50%);
 }
 
 .modal {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
+  position: fixed;
   opacity: 1;
   width: 25rem;
-  z-index: 3;
-  height: 15.5rem;
+  z-index: 6;
   background-color: var(--neutral-white);
-  margin: 28% auto;
-  padding: 2rem 2rem 1.7rem;
+  padding: 2rem;
   border-radius: 0.6rem;
   box-sizing: border-box;
+  box-shadow: hsl(0 0% 0% / 10%) 0 0 0.5rem 0.25rem;
 }
 
 .modal h1 {
@@ -437,8 +436,7 @@ footer a {
   .modal {
     width: 90%;
     height: fit-content;
-    margin: 130% auto;
-    padding: 2rem 2rem 1.7rem;
+    padding: 2rem 1.8rem;
   }
 
   .modal h1 {
